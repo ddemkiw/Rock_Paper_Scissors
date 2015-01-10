@@ -16,4 +16,4 @@ Feature: Starting the game
 
   Scenario: Draw
   	Given I am on '/new_game'
-  	When I press submit with a value of 'paper'
+  	When I press "paper"
