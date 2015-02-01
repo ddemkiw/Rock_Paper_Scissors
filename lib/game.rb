@@ -2,15 +2,18 @@ require_relative 'player'
 
 class Game
 
-
   PAIRS = {
     rock:     { beats: :scissors },
     paper:    { beats: :rock },
     scissors: { beats: :paper }
   }.freeze
 
-  def initialize(player1, player2)
-    @player1, @player2 = player1, player2
+  def initialize
+    @players = []
+  end
+
+  def new_player(player)
+    @players << player
   end
 
   def winner
