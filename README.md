@@ -1,31 +1,24 @@
-Title
+Rock Paper Scissors (Ruby/Sinatra)
 =======================
 
 ## Synopsis
 
-TODO: Enter a description of your project here.
+A small rock, paper, scissors sinatra app. 
 
 ![alt tag](https://github.com/ddemkiw/Rock_Paper_Scissors/blob/master/lib/public/images/front-page.jpg)
 
 ## Technologies Used
 
-- LANGUAGE_ONE
-- LANGUAGE_TWO
-- FRAMEWORK
+- Ruby
+- Sinatra
+- HTML
+- CSS
+- Sinatra
 - TESTING SUITES
+  - Rspec
+  - Cucumber
 
-## Job List
 
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-
-## Favourite Code Snippet
-
-~~~
- TODO: paste code here
-~~~
 
 ## Collaborators
 
@@ -39,4 +32,4 @@ TODO: Enter a description of your project here.
 
 ## Takeaway
 
-TODO: Enter a personal reflection and/or things you learnt
+This was my first real intro to css and html styling. I found it both infinitely frustrating and infinitely satisfying. 
