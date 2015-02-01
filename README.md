@@ -5,7 +5,7 @@ Title
 
 TODO: Enter a description of your project here.
 
-![alt tag](https://raw.github.com/ddemkiw/Rock_Paper_Scissors/master/lib/public/imgages/front-page.jpg)
+![alt tag](https://github.com/ddemkiw/Rock_Paper_Scissors/blob/master/lib/public/images/front-page.jpg)
 
 ## Technologies Used
 
