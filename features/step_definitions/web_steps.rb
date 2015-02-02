@@ -97,6 +97,10 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ 
   end
 end
 
+Then /^I should see the image "(.+)"$/ do |image|
+    page.should have_xpath("//img[contains(@src, \"#{image}\")]")
+end
+
 Then /^(?:|I )should see JSON:$/ do |expected_json|
   require 'json'
   expected = JSON.pretty_generate(JSON.parse(expected_json))
