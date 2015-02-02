@@ -10,4 +10,9 @@ class Player
     @pick = pick
   end
 
+  def auto_picks
+    [:rock, :paper, :scissors].sample
+  end
+
+
 end

@@ -8,12 +8,8 @@ class Game
     scissors: { beats: :paper }
   }.freeze
 
-  def initialize
-    @players = []
-  end
-
-  def new_player(player)
-    @players << player
+  def initialize(player1, player2)
+    @player1, @player2 = player1, player2
   end
 
   def winner

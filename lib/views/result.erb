@@ -1,0 +1,17 @@
+
+  <body>
+    <h1 class="win_h1">
+      
+      <%if @winner == nil %>
+        <%= "Draw!" %>
+      <%else%>
+        <%= "#{@winner.name} win" %>
+      <%end%>
+
+      <p>
+
+      <a id="play-again" href='/pick'>Play Again</a>
+      </p>
+
+    </h1> 
+  </body>

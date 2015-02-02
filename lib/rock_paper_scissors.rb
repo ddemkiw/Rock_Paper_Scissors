@@ -5,9 +5,9 @@ require './lib/game'
 class RockPaperScissors < Sinatra::Base
 
   set :views, Proc.new{ File.join(root, "views") }
-  set :public, Proc.new{ File.join(root, "public") }
+  set :public_dir, Proc.new{ File.join(root, "public") }
 
-  game = Game.new
+
 
   enable :sessions
 
@@ -15,25 +15,31 @@ class RockPaperScissors < Sinatra::Base
     erb :index
   end
 
-  get '/one_player' do
-    erb :one_player
+  get '/pick' do
+    session[:num_players] = 1
+    session[:player1] = Player.new("You")
+    session[:computer] = Player.new("Computer")
+    erb :pick
   end
 
-  post '/guess' do
-   
-  end
-
-  get '/draw' do
-
-  end
-
-  get '/win' do
+  get '/two_players_game' do
 
   end
 
-  get '/lose' do
-
+  post '/result' do
+    guess =  params[:rps]
+    player = session[:player1]
+    computer = session[:computer]
+    game = Game.new(player, computer)
+    player.picks(guess.to_sym)
+    computer.picks(computer.auto_picks)
+    p "Computer picks #{computer.pick}"
+    p player.pick 
+    @winner = game.winner
+    erb :result
   end
+
+
 
   # start the server if ruby file executed directly
   run! if app_file == $0
