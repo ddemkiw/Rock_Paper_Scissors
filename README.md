@@ -5,6 +5,8 @@ Rock Paper Scissors (Ruby/Sinatra)
 
 A small rock, paper, scissors sinatra app. 
 
+Work in Progress.
+
 ![alt tag](https://github.com/ddemkiw/Rock_Paper_Scissors/blob/master/lib/public/images/front-page.jpg)
 
 ## Technologies Used
