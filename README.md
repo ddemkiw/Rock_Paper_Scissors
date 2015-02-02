@@ -20,11 +20,6 @@ A small rock, paper, scissors sinatra app.
 
 
 
-## Collaborators
-
-- NAME_ONE (http://www.github.com/USERNAME)
-- NAME_TWO (http://www.github.com/USERNAME)
-
 ## Still to complete/refactor
 
 - [ ]
