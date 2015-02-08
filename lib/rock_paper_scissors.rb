@@ -21,12 +21,12 @@ class RockPaperScissors < Sinatra::Base
   end
 
   post '/two_player' do
-    name = params[:name]
+    session[:name] = params[:name]
     session[:guess] = params[:rps]
-      if name.nil? || name.empty?
+      if params[:name].nil? || params[:name].empty?
         redirect '/two_player'
       else
-        GAME.add_player(Player.new(name))
+        GAME.add_player(Player.new(session[:name]))
         redirect '/waiting'
       end
   end
@@ -48,8 +48,6 @@ class RockPaperScissors < Sinatra::Base
   end
 
   get '/pick' do
-    GAME.player1.clear
-    GAME.player2.clear
     GAME.add_player(Player.new("You"))
     GAME.add_player(Player.new("Computer"))
     erb :pick
@@ -77,13 +75,21 @@ class RockPaperScissors < Sinatra::Base
   end
 
   get '/two_player_result' do
-    @winner = GAME.winner
-    p session.inspect
-    session[:player1] = @player1_pick
-    session[:player2] = @player2_pick
-    p "player1 picked #{GAME.player1.pick}"
-    p "player2 picked #{GAME.player2.pick}"
-    erb :result
+    session[:name] = @name
+      @winner = GAME.winner
+      p session.inspect
+      session[:player1] = @player1_pick
+      session[:player2] = @player2_pick
+      p "player1 picked #{GAME.player1.pick} #{GAME.player1}"
+      p "player2 picked #{GAME.player2.pick} #{GAME.player1}"
+      p "#{GAME.winner} wins"
+      erb :result
+  end
+
+  get '/clear' do 
+    GAME.player2.clear
+    GAME.player1.clear
+    redirect '/pick'
   end
 
 
