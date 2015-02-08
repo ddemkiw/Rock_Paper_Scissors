@@ -6,13 +6,34 @@ describe 'Rock-Paper-Scissors' do
 
   let(:player1) { Player.new 'A' }
   let(:player2) { Player.new 'B' }
-  let(:game) { Game.new player1, player2 }
+  let(:game) { Game.new }
+
+  context 'adding players' do 
+
+    it "can have players added" do 
+      game.add_player(player1)
+      expect(game.player1).to eq player1
+    end
+
+    it "can have a second player added" do
+      game.add_player(player1)
+      game.add_player(player2)
+      expect(game.player2).to eq player2
+    end
+
+  end 
 
   context 'winning and losing' do
+    
+    before(:each) do
+      game.add_player(player1)
+      game.add_player(player2)
+    end
+
     describe 'rock' do
       it 'should beat scissors' do
-        player1.picks :rock and player2.picks :scissors
-        expect(game.winner).to be(player1)
+        game.player1.picks :rock and game.player2.picks :scissors
+        expect(game.winner).to be(game.player1)
       end
 
       it 'should lose to paper' do
@@ -47,6 +68,11 @@ describe 'Rock-Paper-Scissors' do
   end
 
   context 'draws' do
+
+    before(:each) do
+      game.add_player(player1)
+      game.add_player(player2)
+    end
     
     describe 'any identical picks' do
       

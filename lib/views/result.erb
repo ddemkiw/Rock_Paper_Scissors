@@ -5,8 +5,19 @@
       <%if @winner == nil %>
         <%= "Draw!" %>
       <%else%>
-        <%= "#{@winner.name} win" %>
-      <%end%>
+          <% if @winner.name == "You"%>
+            <%= "#{@winner.name} win" %> </br>
+          <% else %>
+            <%= "#{@winner.name} wins" %> </br>
+          <%end%>
+        <%= "#{@winner.name} picked #{@winner.pick}" %></br>
+        <%end%>
+
+        <% if @player1_pick%>
+          <%= "Player1 picked#{@player1_pick}" %> </br>
+          <%= "Player2 picked#{@player2_pick}" %> </br>
+        <%end%>
+
 
       <p>
 

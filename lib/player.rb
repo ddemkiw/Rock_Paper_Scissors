@@ -14,5 +14,8 @@ class Player
     [:rock, :paper, :scissors].sample
   end
 
+  def clear 
+    pick = nil 
+  end
 
 end

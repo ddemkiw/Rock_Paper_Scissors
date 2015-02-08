@@ -1,6 +1,6 @@
-require_relative 'player'
-
 class Game
+
+  attr_accessor :player1, :player2
 
   PAIRS = {
     rock:     { beats: :scissors },
@@ -8,24 +8,28 @@ class Game
     scissors: { beats: :paper }
   }.freeze
 
-  def initialize(player1, player2)
-    @player1, @player2 = player1, player2
+  def initialize
+    player1, player2 = nil, nil
+  end
+
+  def add_player(player)
+    self.player1 ? self.player2 = player : self.player1 = player 
   end
 
   def winner
     return nil if same_pick?
 
-    if PAIRS[@player1.pick][:beats] == @player2.pick
-      @player1
+    if PAIRS[player1.pick][:beats] == player2.pick
+      player1
     else
-      @player2
+      player2
     end
   end
 
   private
 
   def same_pick?
-    @player1.pick == @player2.pick
+    self.player1.pick == self.player2.pick
   end
 
 end
