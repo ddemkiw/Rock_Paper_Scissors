@@ -1,19 +1,28 @@
 
-  <body>
-    <h1 class="win_h1">
-      
+  <body>   
+    <p>   
       <%if @winner == nil %>
         <%= "Draw!" %>
+          <% if session[:num_player] == 2%>
+          <%= "score: #{@name} #{@score}"%>
+          <a id="play-again" href='/two_player_pick'>Play Again</a>
+        <% else %>
+          <%= "score: #{@name} #{@score}"%>
+          <a id="play-again" href='/one_player_pick'>Play Again</a>   
+        <%end%>
+
       <%else%>
-          <% if @winner.name == "You"%>
-            <%= "#{@winner.name} win" %> </br>
-          <%end%>
-        <%= "The winner: #{@winner.name}, picked #{@winner.pick}" %></br>
-        <% end %>
-      <p>
+      
+        <%= "#{@winner.name} Wins" %>
+        <% if session[:num_player] == 2%>
+          <%= "score: #{@name} #{@score}"%>
+          <a id="play-again" href='/two_player_pick'>Play Again</a>
+        <% else %>
+          <%= "score: #{@name} #{@score}"%>
+          <a id="play-again" href='/one_player_pick'>Play Again</a>   
+        <%end%>
+      <%end%>
+    </p>
 
-      <a id="play-again" href='/clear'>Play Again</a>
-      </p>
-
-    </h1> 
+    
   </body>

@@ -3,11 +3,11 @@ require './lib/player'
 require './lib/game'
 
 class RockPaperScissors < Sinatra::Base
-
   set :views, Proc.new{ File.join(root, "views") }
   set :public_dir, Proc.new{ File.join(root, "public") }
 
-  GAME = Game.new
+@@games = Hash.new
+@@waiting_player = []
 
   enable :sessions
 
@@ -15,82 +15,100 @@ class RockPaperScissors < Sinatra::Base
     erb :index
   end
 
+  get '/one_player' do
+    session[:player] = Player.new("You")
+    session[:computer] = Player.new("Computer")
+    redirect '/one_player_pick'
+  end
+
   get '/two_player' do
     session[:num_players] = 2
+    session[:player] = Player.new(session[:name])
+    if @@waiting_player.empty?
+      @@games[session[:id]] = Game.new
+      @@waiting_player << session[:id]
+    else
+      @@games[session[:id]] = @@games[@@waiting_player.pop]
+    end
+    
     erb :two_player
   end
 
   post '/two_player' do
-    session[:name] = params[:name]
+    session[:player].name = params[:name]
+    p session.inspect
     session[:guess] = params[:rps]
-      if params[:name].nil? || params[:name].empty?
+      if session[:player].name.nil? || session[:player].name.empty?
         redirect '/two_player'
       else
-        GAME.add_player(Player.new(session[:name]))
-        redirect '/waiting'
+        redirect '/two_player_pick'
       end
   end
 
-  get '/waiting' do 
-    if GAME.player2
-      erb :pick
-    else
-      erb :waiting
-    end
-  end
 
-   get '/waiting2' do 
-    if GAME.player2.pick
-      redirect '/two_player_result'
-    else
-      erb :waiting
-    end
-  end
-
-  get '/pick' do
-    GAME.add_player(Player.new("You"))
-    GAME.add_player(Player.new("Computer"))
+  get '/one_player_pick' do
+    @@games[session[:id]] = Game.new
+    game = @@games[session[:id]]
+    game.add_player(session[:player])
+    game.add_player(session[:computer])
     erb :pick
   end
 
+  get '/two_player_pick' do 
+    @@games[session[:id]] = Game.new
+    game = @@games[session[:id]]
+    game.add_player(session[:player])
+    erb :pick
+  end
 
   post '/result' do
+    game = @@games[session[:id]]
     if session[:num_players] == 2
       guess =  params[:rps]
-        if GAME.player1.pick 
-          session[:player2] = GAME.player2.picks(guess.to_sym)
+        if game.player1.pick 
+          session[:pick] = game.player2.picks(guess.to_sym)
         else
-          session[:player1] = GAME.player1.picks(guess.to_sym)
+          session[:pick] = game.player1.picks(guess.to_sym)
         end
-      redirect '/waiting2'
+      redirect '/waiting'
     else
-      guess =  params[:rps]
-      @pick = GAME.player1.picks(guess.to_sym)
-      @auto_pick = GAME.player2.picks(GAME.player2.auto_picks)
-      @winner = GAME.winner
-      p "Computer picks #{GAME.player2.pick}"
-      p GAME.player1.pick 
+      game.player1.picks(params[:rps].to_sym)
+      game.player2.picks(game.player2.auto_picks)
+        if game.winner
+          game.winner.add_point
+          @winner = game.winner
+        end
+      @name = session[:player].name
+      @score = session[:player].score
+      p @score
       erb :result
     end
   end
 
+
+
   get '/two_player_result' do
-    session[:name] = @name
-      @winner = GAME.winner
-      p session.inspect
-      session[:player1] = @player1_pick
-      session[:player2] = @player2_pick
-      p "player1 picked #{GAME.player1.pick} #{GAME.player1}"
-      p "player2 picked #{GAME.player2.pick} #{GAME.player1}"
-      p "#{GAME.winner} wins"
-      erb :result
+    game = @@games[session[:id]]
+    @name = session[:player].name
+    @score = session[:player].score
+    if game.winner
+      game.winner.add_point
+      @winner = game.winner
+    end
+      erb :result  
   end
 
-  get '/clear' do 
-    GAME.player2.clear
-    GAME.player1.clear
-    redirect '/pick'
+   get '/waiting' do
+     @@games[session[:id]].add_player(session[:player])
+      if game.player2
+        redirect '/two_player_result'
+      else
+        erb :waiting
+      end
   end
+
+
+
 
 
   # start the server if ruby file executed directly

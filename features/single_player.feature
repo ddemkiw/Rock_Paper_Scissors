@@ -13,3 +13,11 @@ Feature: Starting the game
     Then I should see the image "rock.png"
     Then I should see the image "paper.gif"
     Then I should see the image "scissors.jpg"
+
+  Scenario: Result
+    Given I am on the homepage
+    When I follow "Single Player"
+    Given I am on '/pick'
+    When I press 'rps' with value 'paper' 
+    Then I should see "win"
+

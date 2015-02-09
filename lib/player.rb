@@ -1,8 +1,9 @@
 class Player
 
-  attr_reader :pick, :name
+  attr_accessor :pick, :name, :score
 
   def initialize(name)
+    @score = 0
     @name = name
   end
 
@@ -14,8 +15,9 @@ class Player
     [:rock, :paper, :scissors].sample
   end
 
-  def clear 
-    pick = nil 
+  def add_point
+    @score +=1    
   end
+
 
 end
