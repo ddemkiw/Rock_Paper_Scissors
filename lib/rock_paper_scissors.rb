@@ -61,28 +61,28 @@ class RockPaperScissors < Sinatra::Base
     erb :pick
   end
 
-  post '/result' do
-    game = @@games[session[:id]]
-    if session[:num_players] == 2
-      guess =  params[:rps]
-        if game.player1.pick 
-          session[:pick] = game.player2.picks(guess.to_sym)
-        else
-          session[:pick] = game.player1.picks(guess.to_sym)
-        end
-      redirect '/waiting'
-    else
-      game.player1.picks(params[:rps].to_sym)
-      game.player2.picks(game.player2.auto_picks)
-        if game.winner
-          game.winner.add_point
-          @winner = game.winner
-        end
-      @name = session[:player].name
-      @score = session[:player].score
-      p @score
-      erb :result
-    end
+  # post '/result' do
+  #   game = @@games[session[:id]]
+  #   if session[:num_players] == 2
+  #     guess =  params[:rps]
+  #       if game.player1.pick 
+  #         session[:pick] = game.player2.picks(guess.to_sym)
+  #       else
+  #         session[:pick] = game.player1.picks(guess.to_sym)
+  #       end
+  #     redirect '/waiting'
+  #   else
+  #     game.player1.picks(params[:rps].to_sym)
+  #     game.player2.picks(game.player2.auto_picks)
+  #       if game.winner
+  #         game.winner.add_point
+  #         @winner = game.winner
+  #       end
+  #     @name = session[:player].name
+  #     @score = session[:player].score
+  #     p @score
+  #     erb :result
+  #   end
   end
 
 
