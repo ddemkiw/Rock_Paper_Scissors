@@ -1,6 +1,24 @@
+*{
+  font-family: 'Josefin Slab', serif;
+}
+
+#select-heading{
+  font-size: 5em;
+  float: center;
+}
+
 #front-page-image{
   width: 100%;
   height: 100%;
+}
+
+
+.btn{
+  outline: none;
+}
+
+.selector{
+  float: left;
 }
 
 .select_players{
@@ -11,7 +29,6 @@
 #start-single-player{
   float: center; 
   padding-left: 10em;
-
 }
 
 #start-two-player{
