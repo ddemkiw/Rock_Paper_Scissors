@@ -1,8 +1,8 @@
 class Game
 
-  def initialize(opts={})
-    @player1 = opts[:player1]
-    @player2 = opts[:player2]
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
     @beats = {:rock=>:scissors, :scissors=>:paper, :paper=>:rock}
   end
 

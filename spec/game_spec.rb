@@ -6,7 +6,7 @@ describe 'playing game' do
 
   let(:player1) {Player.new('Sam')}
   let(:player2) {Player.new('Sandi')}
-  let(:game) {Game.new({:player1=>player1, :player2=>player2})}
+  let(:game) {Game.new(player1, player2)}
 
   context 'against a real player' do 
 
