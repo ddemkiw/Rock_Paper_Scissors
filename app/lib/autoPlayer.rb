@@ -1,12 +1,13 @@
 class AutoPlayer
 
-  attr_reader :pick
+  attr_reader :pick, :name
 
   def initialize()
     @choices = [:rock, :paper, :scissors]
+    @name = 'Computer'
   end
 
   def picks
-    @choices.sample
+    @pick = @choices.sample
   end 
 end 
