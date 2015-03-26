@@ -9,17 +9,16 @@ class RPS < Sinatra::Base
   enable :sessions
 
   @@waiting_players = []
-
+  @@playing = []
+  
 
   get '/' do
-    session[:game_number] =0
     session[:games] = []
+
     erb :index
   end
 
   get '/one_player' do 
-    session[:game_number] += 1
-
     erb :select_one_player
   end
 
@@ -29,7 +28,6 @@ class RPS < Sinatra::Base
     @winner = @game.winner
     @winner == :draw ? session[:games] << "Draw" : session[:games]<< @winner.name 
     scores(session[:games])
-
     erb :result
   end 
 
@@ -38,43 +36,43 @@ class RPS < Sinatra::Base
   end  
 
   post '/two_player' do
-    @@waiting_players << params[:name]
     session[:name] = params[:name]
-     if @@waiting_players.length == 2 
-        redirect '/two_player_select'
-      else
-        redirect 'waiting'
-      end 
+    redirect '/two_player_select'
   end 
 
   get  '/two_player_select' do
-    @player1 = Player.new(@@waiting_players[0])
-    @player2 = Player.new(@@waiting_players[1]) 
-    
+    remove_player_from_array(@@playing)
     erb :select_two_player
   end 
 
   post '/two_player_select' do
-    @player1 = Player.new(@@waiting_players[0])
-    @player2 = Player.new(@@waiting_players[1]) 
-    two_player_picks
-
-    if both_players_picked?
-      @winner = @game.winner
-      @winner == :draw ? session[:games] << "Draw" : session[:games]<< @winner.name 
-      scores(session[:games])
-      erb :result
-    else
-      erb :waiting
-    end
+    session[:player] = Player.new(params[:name])
+    session[:player].picks(params[:rps]) 
+    redirect 'waiting2'
   end
 
+  get '/two_player_result' do
+    new_two_player_game(@@playing[0], @@playing[1])
+    @winner = @game.winner
+    puts @game.winner
+    @winner == :draw ? session[:games] << "Draw" : session[:games]<< @winner.name 
+    scores(session[:games])
+    erb :result_two_player
+  end
+
+  
+  get '/waiting2' do
+    @@playing << session[:player]
+    
+    if @@playing.length == 2
+      redirect '/two_player_result'
+    else
+       erb :waiting
+     end 
+  end 
+
   get '/waiting' do
-    if @@waiting_players.length == 2 
-        redirect '/two_player_select'
-      else
-        erb :waiting
-      end 
+    (@@waiting_players.length == 2) ? (redirect '/two_player_select') : (erb :waiting)
   end 
 
 
