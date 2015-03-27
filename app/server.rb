@@ -70,7 +70,9 @@ class RPS < Sinatra::Base
   get '/reset_game' do
     puts @@next_game_players
     if @@next_game_players.length % 2 == 0
-      @@waiting_players.shift
+      if @@waiting_players.length == 2
+          @@waiting_players.clear
+        end 
       redirect '/two_player_select'
     else
       erb :waiting
