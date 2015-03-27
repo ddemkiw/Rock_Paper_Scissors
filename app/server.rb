@@ -45,7 +45,6 @@ class RPS < Sinatra::Base
     session[:player] = Player.new(session[:name])
     session[:player].picks(params[:rps].to_sym) 
     @@waiting_players << session[:player]
-    puts params[:rps].to_sym
     redirect 'waiting'
   end
 
@@ -68,7 +67,6 @@ class RPS < Sinatra::Base
   end
 
   get '/reset_game' do
-    puts @@next_game_players
     if @@next_game_players.length % 2 == 0
       if @@waiting_players.length == 2
           @@waiting_players.clear
