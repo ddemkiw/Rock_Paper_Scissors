@@ -7,7 +7,7 @@
   <% if @winner == :draw%>
     <%= "DRAW" %>
   <%else%>
-    <%= pluralizer(@winner.name, "#{@winner.name} Win")%><br>
+    <%="#{@winner.name} Wins"%><br>
   <%end%><br>
 </div>
 

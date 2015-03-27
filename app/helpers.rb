@@ -11,7 +11,7 @@ def new_one_player_game
 end
 
 def pluralizer(winner, text)
-  return text.pluralize if winner != "You"
+  return "#{text}s" if winner != "You"
   text
 end
 

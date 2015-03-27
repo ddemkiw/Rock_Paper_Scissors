@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'sinatra'
-gem 
 
 group :development, :test do
   gem 'capybara'
@@ -10,5 +9,4 @@ group :development, :test do
   gem 'launchy'
   gem 'rspec'
   gem 'shotgun'
-  gem 'create_awesome_readme'
 end

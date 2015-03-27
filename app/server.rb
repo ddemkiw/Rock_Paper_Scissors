@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'active_support/inflector'
 require './app/helpers'
 
 class RPS < Sinatra::Base
