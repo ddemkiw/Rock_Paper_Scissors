@@ -1,0 +1,21 @@
+<div id="results">
+  <%="#{@game.player1.name} picked #{@game.player1.pick}"%><br>
+  <%="#{@game.player2.name} picked #{@game.player2.pick}"%><br>
+</div>
+
+<div id="winner">
+  <% if @winner == :draw%>
+    <%= "DRAW" %>
+  <%else%>
+    <%= pluralizer(@winner.name, "#{@winner.name} Win")%><br>
+  <%end%><br>
+</div>
+
+<div id="score">
+  <p>Score:<p>
+    <%@score.each do |name, games| %>
+      <div class="score"><%= "#{name} : #{games.to_s}" %></div>
+  <%end%>
+</div>
+
+<p><a id="play-again" href='/reset_game'>Play Again</a></p>  

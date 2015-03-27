@@ -9,12 +9,11 @@ class RPS < Sinatra::Base
   enable :sessions
 
   @@waiting_players = []
-  @@playing = []
+  @@next_game_players = []
   
 
   get '/' do
     session[:games] = []
-
     erb :index
   end
 
@@ -25,7 +24,6 @@ class RPS < Sinatra::Base
   post '/one_player_select' do 
     new_one_player_game
     @game.player1.picks(params[:rps].to_sym)
-    @winner = @game.winner
     @winner == :draw ? session[:games] << "Draw" : session[:games]<< @winner.name 
     scores(session[:games])
     erb :result
@@ -41,40 +39,43 @@ class RPS < Sinatra::Base
   end 
 
   get  '/two_player_select' do
-    remove_player_from_array(@@playing)
     erb :select_two_player
   end 
 
   post '/two_player_select' do
     session[:player] = Player.new(params[:name])
-    session[:player].picks(params[:rps]) 
-    redirect 'waiting2'
+    session[:player].picks(params[:rps].to_sym) 
+    @@waiting_players << session[:player]
+    puts params[:rps].to_sym
+    redirect 'waiting'
   end
 
+  get '/waiting' do
+    if @@waiting_players.length == 2
+      redirect '/two_player_result'
+    else
+       erb :waiting
+     end
+  end
+
+
   get '/two_player_result' do
-    new_two_player_game(@@playing[0], @@playing[1])
-    @winner = @game.winner
-    puts @game.winner
+    @@next_game_players << session[:player]
+    new_two_player_game(@@waiting_players[0], @@waiting_players[1])
     @winner == :draw ? session[:games] << "Draw" : session[:games]<< @winner.name 
     scores(session[:games])
     erb :result_two_player
   end
 
-  
-  get '/waiting2' do
-    @@playing << session[:player]
-    
-    if @@playing.length == 2
-      redirect '/two_player_result'
+  get '/reset_game' do
+    puts @@next_game_players
+    if @@next_game_players.length % 2 == 0
+      @@waiting_players.shift
+      redirect '/two_player_select'
     else
-       erb :waiting
-     end 
+      erb :waiting
+    end
   end 
-
-  get '/waiting' do
-    (@@waiting_players.length == 2) ? (redirect '/two_player_select') : (erb :waiting)
-  end 
-
 
   # start the server if ruby file executed directly
   run! if app_file == $0
