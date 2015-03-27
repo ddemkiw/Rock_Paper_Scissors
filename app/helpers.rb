@@ -24,10 +24,27 @@ def new_two_player_game(player1, player2)
   @winner = @game.winner
 end 
 
-
 def remove_player_from_array(array)
   array.pop
 end 
+
+def opponent_pick(player)
+  if @game.player1.pick == player.pick
+    @game.player2.pick
+  else 
+    @game.player1.pick
+  end 
+end 
+
+def opponent_name(player)
+  if @game.player1.name == player.name
+    @game.player2.name
+  else 
+    @game.player1.name
+  end
+end 
+
+
 
 
 

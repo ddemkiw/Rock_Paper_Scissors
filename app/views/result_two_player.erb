@@ -1,6 +1,6 @@
 <div id="results">
-  <%="#{@game.player1.name} picked #{@game.player1.pick}"%><br>
-  <%="#{@game.player2.name} picked #{@game.player2.pick}"%><br>
+  <%="Your opponent, #{opponent_name(@player)}, picked #{opponent_pick(@player)}"%><br>
+  <%="You picked #{@player.pick}"%><br>
 </div>
 
 <div id="winner">

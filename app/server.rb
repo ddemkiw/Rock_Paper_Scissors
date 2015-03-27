@@ -43,7 +43,7 @@ class RPS < Sinatra::Base
   end 
 
   post '/two_player_select' do
-    session[:player] = Player.new(params[:name])
+    session[:player] = Player.new(session[:name])
     session[:player].picks(params[:rps].to_sym) 
     @@waiting_players << session[:player]
     puts params[:rps].to_sym
@@ -61,6 +61,7 @@ class RPS < Sinatra::Base
 
   get '/two_player_result' do
     @@next_game_players << session[:player]
+    @player = session[:player]
     new_two_player_game(@@waiting_players[0], @@waiting_players[1])
     @winner == :draw ? session[:games] << "Draw" : session[:games]<< @winner.name 
     scores(session[:games])
