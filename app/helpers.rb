@@ -7,7 +7,7 @@ def new_one_player_game
   @player1 = Player.new('You')
   @player2 = AutoPlayer.new
   @game = Game.new(@player1, @player2)
-  @winner = @game.winner
+  @game.player2.picks
 end
 
 def pluralizer(winner, text)

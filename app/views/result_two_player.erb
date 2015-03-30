@@ -1,7 +1,7 @@
 <div id="results">
   <%="Your opponent, #{opponent_name(@player)}, picked #{opponent_pick(@player)}"%><br>
   <%="You picked #{@player.pick}"%><br>
-</div>
+
 
 <div id="winner">
   <% if @winner == :draw%>
@@ -18,4 +18,8 @@
   <%end%>
 </div>
 
-<p><a id="play-again" href='/reset_game'>Play Again</a></p>  
+<p>Two Players<a id="play-again" href='/reset_game'>Play Again </a>- Do you dare to challenge the completely randomized selection of an actual person?</p>
+
+<p>Single Player <a id="play-again" href='/'>Play Again </a>- Do you dare to challenge the completely randomized selection of a machine?</p>  
+
+</div>

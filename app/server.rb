@@ -12,6 +12,7 @@ class RPS < Sinatra::Base
   
 
   get '/' do
+    session.clear
     session[:games] = []
     erb :index
   end
@@ -20,12 +21,14 @@ class RPS < Sinatra::Base
     erb :select_one_player
   end
 
-  post '/one_player_select' do 
+  post '/one_player_select' do
     new_one_player_game
     @game.player1.picks(params[:rps].to_sym)
+    @winner = @game.winner
     @winner == :draw ? session[:games] << "Draw" : session[:games]<< @winner.name 
     scores(session[:games])
-    erb :result
+
+    erb :result 
   end 
 
   get '/two_player' do
