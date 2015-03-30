@@ -1,25 +1,36 @@
-<div id="results">
-  <%="#{@player1.name} picked #{@player1.pick}"%><br>
-  <%="#{@player2.name} picked #{@player2.pick}"%><br>
+<div class="container" id="results">
+  
+  <div class="jumbotron" id="winner">
+    <% if @winner == :draw%>
+      <%= "DRAW" %>
+    <%else%>
+      <%= pluralizer(@winner.name, "#{@winner.name} Win")%><br>
+    <%end%><br>
+    
+    <p class="picks col-md-6">
+      <%="#{@player1.name} picked #{@player1.pick}"%>
+    </p>
+    <p class="picks col-md-6">
+      <%="#{@player2.name} picked #{@player2.pick}"%>
+    </p>
+  </div>
 
 
-<div id="winner">
-  <% if @winner == :draw%>
-    <%= "DRAW" %>
-  <%else%>
-    <%= pluralizer(@winner.name, "#{@winner.name} Win")%><br>
-  <%end%><br>
-</div>
+  <br>
+  <br>
 
-<div id="score">
-  <p>Score:<p>
-    <%@score.each do |name, games| %>
-      <div class="score"><%= "#{name} : #{games.to_s}" %></div>
-  <%end%>
-</div>
+  <div class="col-md=11 col-md-offset-1" id="score">
+    <h3>Score:</h3>
+      <%@score.each do |name, games| %>
+        <div class="score"><%= "#{name} : #{games.to_s}" %></div>
+    <%end%>
+  </div>
+    <br>
 
-<p>Single Player - <a id="play-again" href='/one_player'>Play Again </a>- Do you dare to challenge the completely randomized selection of a machine?</p>  
+  <div class="col-md=11 col-md-offset-1" id="links">
+    <p>Single Player - <a id="play-again" href='/one_player'>Play Again </a>- Do you dare to challenge the completely randomized selection of a machine?</p>  
 
-<p>Two Players -<a id="play-again" href='/'>Play Again </a>- Do you dare to challenge the completely randomized selection of an actual person?</p>
+    <p>Two Players - <a id="play-again" href='/'>Play Again </a>- Do you dare to challenge the completely randomized selection of an actual person?</p>
+  </div>
 
 </div>

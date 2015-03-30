@@ -1,25 +1,33 @@
-<div id="results">
-  <%="Your opponent, #{opponent_name(@player)}, picked #{opponent_pick(@player)}"%><br>
-  <%="You picked #{@player.pick}"%><br>
+<div class="container" id="results">
+
+  <div class="jumbotron" id="winner">
+    <% if @winner == :draw%>
+      <%= "DRAW" %>
+    <%else%>
+      <%="#{@winner.name} Wins"%><br>
+    <%end%><br>
+    <p class="picks col-md-6">
+      <%="Your opponent picked #{opponent_pick(@player)}"%>
+    </p>
+    <p class="picks col-md-6">
+      <%="You picked #{@player.pick}"%>
+    </p>
+  </div>
 
 
-<div id="winner">
-  <% if @winner == :draw%>
-    <%= "DRAW" %>
-  <%else%>
-    <%="#{@winner.name} Wins"%><br>
-  <%end%><br>
-</div>
 
-<div id="score">
-  <p>Score:<p>
-    <%@score.each do |name, games| %>
-      <div class="score"><%= "#{name} : #{games.to_s}" %></div>
-  <%end%>
-</div>
+  <div class="col-md=11 col-md-offset-1" id="score">
+    <h3>Score:</h3>
+      <%@score.each do |name, games| %>
+        <div class="score"><%= "#{name} : #{games.to_s}" %></div>
+    <%end%>
+  </div>
+    <br>
 
-<p>Two Players<a id="play-again" href='/reset_game'>Play Again </a>- Do you dare to challenge the completely randomized selection of an actual person?</p>
+  <div class="col-md=11 col-md-offset-1" id="links">
+    <p>Single Player -<a id="play-again" href='/'> Play Again </a>- Do you dare to challenge the completely randomized selection of a machine?</p> 
 
-<p>Single Player <a id="play-again" href='/'>Play Again </a>- Do you dare to challenge the completely randomized selection of a machine?</p>  
+    <p>Two Players -<a id="play-again" href='/reset_game'> Play Again </a>- Do you dare to challenge the completely randomized selection of an actual person?</p>
+  </div> 
 
 </div>
